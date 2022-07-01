@@ -8,6 +8,7 @@ const dataSchema = new mongoose.Schema({
     },
     owner:{
         type: mongoose.Schema.Types.ObjectId,
+        unique: true,
         required: true,
         ref: 'User'
     }
