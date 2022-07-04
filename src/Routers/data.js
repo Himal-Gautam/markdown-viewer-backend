@@ -1,9 +1,9 @@
 import express from 'express'
 import Data from '../models/data.js'
 import auth from '../middleware/auth.js'
-const router = new express.Router()
+const dataRouter = new express.Router()
 
-router.post('/data', auth, async (req, res) => {
+dataRouter.post('/data', auth, async (req, res) => {
     const markdown = new Data({
         ...req.body,
         owner: req.user._id
@@ -17,4 +17,4 @@ router.post('/data', auth, async (req, res) => {
     }
 })
 
-export default router
+export default dataRouter

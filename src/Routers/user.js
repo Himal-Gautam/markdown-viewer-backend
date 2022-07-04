@@ -2,12 +2,12 @@ import express from "express";
 import User from "../models/user.js";
 import auth from "../middleware/auth.js";
 import { request } from "express";
-const router = new express.Router();
+const userRouter = new express.Router();
 
 const success = true;
 
 //creates new user
-router.post("/users/signup", async (req, res) => {
+userRouter.post("/users/signup", async (req, res) => {
   try {
     const user = new User(req.body);
     console.log(req.body);
@@ -23,7 +23,7 @@ router.post("/users/signup", async (req, res) => {
 });
 
 // loggin
-router.post("/users/login", async (req, res) => {
+userRouter.post("/users/login", async (req, res) => {
   console.log("request recieved");
   try {
     const user = await User.findByCredentials(
@@ -41,7 +41,7 @@ router.post("/users/login", async (req, res) => {
 });
 
 //user logout
-router.post("/users/logout", auth, async (req, res) => {
+userRouter.post("/users/logout", auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.token;
@@ -55,8 +55,8 @@ router.post("/users/logout", auth, async (req, res) => {
   }
 });
 
-router.get('/users/me', auth, async (req, res) => {
+userRouter.get('/users/me', auth, async (req, res) => {
     res.status(202).send(req.user)
 })
 
-export default router;
+export default userRouter;
