@@ -15,6 +15,7 @@ app.use(userRouter)
 app.use(dataRouter)
 
 app.get("/", (req, res) => {
+  console.log('hi');
     res.send("Welcome to Task Manager Server !!!")
 })
 
