@@ -1,7 +1,7 @@
 import express from 'express'
 import './db/mongoose.js'
-import userRouter from './routers/user.js'
-import dataRouter from './routers/data.js'
+import userRouter from './Routers/user.js'
+import dataRouter from './Routers/data.js'
 import cors from 'cors'
 import chalk from "chalk";
 
@@ -16,7 +16,7 @@ app.use(dataRouter)
 
 app.get("/", (req, res) => {
   console.log('hi');
-    res.send("Welcome to Task Manager Server !!!")
+    res.send("Welcome to Markdown Viewer Server !!!")
 })
 
 app.listen(port, () => {
