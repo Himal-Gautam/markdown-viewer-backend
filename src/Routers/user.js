@@ -3,7 +3,6 @@ import User from "../models/user.js";
 import auth from "../middleware/auth.js";
 import { request } from "express";
 const router = new express.Router();
-import { Auth } from "two-step-auth";
 
 const success = true;
 
