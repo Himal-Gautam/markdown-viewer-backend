@@ -60,8 +60,8 @@ userRouter.post('/users/saveData', auth, async (req, res) => {
 
 userRouter.get('/users/saveData', auth, async (req, res) => {
   try {
-    let markdown = req.body.markdown
-    res.status(200).send(markdown);
+    let markdown = req.user.markdown
+    res.status(200).send({markdown: markdown});
   } catch (e) {
     res.status(500).send();
   }
