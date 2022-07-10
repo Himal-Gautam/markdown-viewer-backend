@@ -10,12 +10,8 @@ const success = true;
 userRouter.post("/users/signup", async (req, res) => {
   try {
     const user = new User(req.body);
-    console.log(req.body);
-    console.log(user);
     await user.save();
-    console.log("user saved");
     const token = await user.generateAuthToken();
-    console.log({ user, token });
     res.status(201).send({ user, token });
   } catch (e) {
     res.status(400).send(e);
@@ -24,17 +20,13 @@ userRouter.post("/users/signup", async (req, res) => {
 
 // loggin
 userRouter.post("/users/login", async (req, res) => {
-  console.log("request recieved");
   try {
     const user = await User.findByCredentials(
       req.body.email,
       req.body.password
     );
-    console.log("user found");
     const token = await user.generateAuthToken();
-    console.log("token created");
     res.send({ user, token });
-    console.log("data sent");
   } catch (e) {
     res.status(401).send();
   }
@@ -54,6 +46,26 @@ userRouter.post("/users/logout", auth, async (req, res) => {
     res.status(500).send();
   }
 });
+
+
+userRouter.post('/users/saveData', auth, async (req, res) => {
+  try {
+    req.user.markdown = req.body.markdown
+    await req.user.save();
+    res.status(200).send({status : "pass"});
+  } catch (e) {
+    res.status(500).send({status:  "failed"});
+  }
+})
+
+userRouter.get('/users/saveData', auth, async (req, res) => {
+  try {
+    let markdown = req.body.markdown
+    res.status(200).send(markdown);
+  } catch (e) {
+    res.status(500).send();
+  }
+})
 
 userRouter.get('/users/me', auth, async (req, res) => {
     res.status(202).send(req.user)

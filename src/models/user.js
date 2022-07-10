@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import Task from './data.js'
 import 'dotenv/config'
 
 const userSchema = new mongoose.Schema({
@@ -39,15 +38,14 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    markdown: {
+        type: String,
+        default: "",
+        trim: true
+    },
 },{
     timestamps: true
-})
-
-userSchema.virtual('tasks',{
-    ref: 'Task',
-    localField : '_id',
-    foreignField: 'owner'
 })
 
 userSchema.methods.toJSON = function(){
@@ -71,7 +69,7 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
-// finds the user based ob enail & password
+// finds the user based on enail & password
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
 
@@ -101,12 +99,12 @@ userSchema.pre('save', async function (next) {
 })
 
 // Delete user tasks when user is removed
-userSchema.pre('remove', async function (next) {
-    const user = this
-    await Task.deleteMany({owner: user._id})
+// userSchema.pre('remove', async function (next) {
+//     const user = this
+//     await Task.deleteMany({owner: user._id})
 
-    next()
-})
+//     next()
+// })
 
 const User = mongoose.model('User', userSchema)
 

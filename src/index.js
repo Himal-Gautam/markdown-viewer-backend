@@ -1,7 +1,6 @@
 import express from "express";
 import "./db/mongoose.js";
 import userRouter from "./Routers/user.js";
-import dataRouter from "./Routers/data.js";
 import cors from "cors";
 import chalk from "chalk";
 
@@ -12,7 +11,6 @@ app.use(cors());
 
 app.use(express.json());
 app.use(userRouter);
-app.use(dataRouter);
 
 app.get("/", (req, res) => {
   console.log("hi");
